@@ -48,22 +48,26 @@ export default {
     };
   },
   methods: {
+    /**
+     * This method set the transformation and alpha / opacity of the mesh in the glb/gltf format.
+     */
     setGLTFTransformation: function() {
       return() => {
-        console.log("here")
+        //Get the group containing all the meshes, VH_M_heart is the one used in the original source
         const childRegion = this.$refs.scaffold2.$module.scene.getRootRegion().getChildWithName("VH_M_heart");
         const group = childRegion.getGroup();
+        //Setting the position of the group containning the meshes. Group is the THREE.Group/Object3D object.
         group.position.set(0.04344825, -0.423371166, 0.0150267193);
         group.matrixAutoUpdate = true;
         //const childArray = childRegion.getAll("SPARCM_heart");
         childRegion.forEachGeometry(object => {
             object.morph.matrixAutoUpdate = true;
+            //Set the transparency for all the meshes in the group
             object.setAlpha(0.5);
           },
           true
         )
         this.$refs.scaffold2.$module.scene.loadViewURL("https://mapcore-bucket1.s3.us-west-2.amazonaws.com/hubmaps_heart/heart_m_view.json");
-
         this.$refs.scaffold2.$module.unsetFinishDownloadCallback();
       }
     },
