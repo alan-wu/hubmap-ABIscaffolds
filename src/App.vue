@@ -44,22 +44,23 @@ export default {
         url: "https://mapcore-bucket1.s3.us-west-2.amazonaws.com/hubmaps_heart/donor_with_view.json",
         format: "metadata",
       },
-      gltfLink: "https://mapcore-bucket1.s3.us-west-2.amazonaws.com/hubmaps_heart/humanHeart_M.glb",
+      gltfLink: "https://mapcore-bucket1.s3.us-west-2.amazonaws.com/hubmaps_heart/VH_M_Heart_only.glb",
     };
   },
   methods: {
     setGLTFTransformation: function() {
       return() => {
         console.log("here")
-        const childRegion = this.$refs.scaffold2.$module.scene.getRootRegion().getChildWithName("SPARCM");
+        const childRegion = this.$refs.scaffold2.$module.scene.getRootRegion().getChildWithName("VH_M_heart");
         const group = childRegion.getGroup();
         group.position.set(0.04344825, -0.423371166, 0.0150267193);
         group.matrixAutoUpdate = true;
-        const childArray = childRegion.findGeometriesWithGroupName("SPARCM_heart");
-        childArray.forEach(object => {
+        //const childArray = childRegion.getAll("SPARCM_heart");
+        childRegion.forEachGeometry(object => {
             object.morph.matrixAutoUpdate = true;
             object.setAlpha(0.5);
-          }
+          },
+          true
         )
         this.$refs.scaffold2.$module.scene.loadViewURL("https://mapcore-bucket1.s3.us-west-2.amazonaws.com/hubmaps_heart/heart_m_view.json");
 
